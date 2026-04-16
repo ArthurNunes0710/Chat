@@ -3,8 +3,11 @@ import threading
 
 def receber(sock):
     while True:
-        print(sock.recv(1024).decode())
-
+        try:
+            print(sock.recv(1024).decode())
+        except:
+            break
+            
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect(("127.0.0.1", 5001))
 
