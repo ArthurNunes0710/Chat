@@ -10,6 +10,9 @@ sock.connect(("127.0.0.1", 5001))
 
 threading.Thread(target=receber, args=(sock,), daemon=True).start()
 
+nome = input("Digite um nome para usar no Chat: ")
+sock.send(nome.encode())
+
 while True:
     msg = input()
     sock.send(msg.encode())
