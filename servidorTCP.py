@@ -2,34 +2,37 @@ import socket
 import threading
 
 # lista de clientes conectados
-clientes = []
+clientes = {}
 
 # função para enviar mensagem para todos
 def broadcast(mensagem, cliente_origem):
+    nome = clientes[cliente_origem]
+    msg_format = f"{nome}: {mensagem.decode()}".encode()
     for cliente in clientes:
         if cliente != cliente_origem:
             try:
-                cliente.send(mensagem)
+                cliente.send(msg_format)
             except:
-                clientes.remove(cliente)
+                clientes.pop(cliente,None)
 
 # função que lida com cada cliente (THREAD)
 def lidar_cliente(conn, addr):
-    print(f"Conectado com {addr}")
-    clientes.append(conn)
+    nome = conn.recv(1024).decode()
+    print(f"{nome} conectado com {addr}")
+    clientes[conn] = nome
 
     while True:
         try:
             mensagem = conn.recv(1024)
             if not mensagem:
                 break
-            print(f"{addr}: {mensagem.decode()}")
+            print(f"{addr} - {clientes[conn]}: {mensagem.decode()}")
             broadcast(mensagem, conn)
         except:
             break
 
     print(f"Desconectado: {addr}")
-    clientes.remove(conn)
+    clientes.pop(conn , None)
     conn.close()
 
 # função principal do servidor
