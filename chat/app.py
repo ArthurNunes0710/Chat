@@ -1,5 +1,7 @@
 from flask import Flask , render_template , url_for , request , redirect , session
 from flask_sqlalchemy import SQLAlchemy
+import threading
+import socket
 from datetime import datetime
 
 app = Flask(__name__)
@@ -7,6 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 app.secret_key = "abc123"
 
+clientes = {}
 
 class Usuario(db.Model):
     login = db.Column(db.String, primary_key=True)
@@ -15,7 +18,12 @@ class Usuario(db.Model):
 
     def __repr__(self):
         return '<Login %r>' % self.login
-
+    
+def receberMensagens(cliente):
+    while True:
+        data = cliente['socket'].recv(1024)
+        mensagem = data.decode()
+        cliente['mensagens'].append(mensagem)
 
 @app.route('/',methods=["GET","POST"])
 def inicio():
@@ -28,19 +36,39 @@ def inicio():
         if not usuario or usuario.senha != senha:
             return "Login ou senha inválidos"
 
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(("127.0.0.1", 5001))
+
+        clientes[login] = {
+                           'socket': s,
+                           'mensagens': []
+                          }
+
+        t = threading.Thread(target=receberMensagens, args=(clientes[login]), daemon=True)
+        t.start()
        
         session['usuario'] = login
 
         return redirect('/chat') 
 
     return render_template("inicio.html")
-    
 
-@app.route('/chat')
+@app.route('/chat', methods = ['POST','GET'])
 def chat():
+    login = session['usuario']
+    cliente = clientes[login]
+
+    if request.method == 'POST':
+        mensagem = 'None '# request.form.get('mensagem') ?
+        if mensagem:
+            cliente['socket'].send(mensagem.encode())
+            cliente['mensagens'].append()
+
+        return redirect('/')
+    
+    print(clientes)
+    
     return render_template("chat.html")
-
-
 
 @app.route('/cadastro', methods = ['POST','GET'])
 def index():
@@ -112,8 +140,6 @@ def editar(login):
 
     else:
         return render_template('editar.html', i = i)
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

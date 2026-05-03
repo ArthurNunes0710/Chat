@@ -1,7 +1,6 @@
 import socket
 import threading
 
-# lista de clientes conectados
 clientes = {}
 
 # função para enviar mensagem para todos
@@ -38,15 +37,15 @@ def lidar_cliente(conn, addr):
 
 # função principal do servidor
 def iniciar_servidor():
-    servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    servidor.bind(("0.0.0.0", 5001))
-    servidor.listen()
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(("0.0.0.0", 5001))
+        s.listen()
 
-    print("Servidor rodando...")
+        print("Servidor rodando...")
 
-    while True:
-        conn, addr = servidor.accept()
-        thread = threading.Thread(target=lidar_cliente, args=(conn, addr))
-        thread.start()
+        while True:
+            conn, addr = s.accept()
+            thread = threading.Thread(target=lidar_cliente, args=(conn, addr))
+            thread.start()
 
 iniciar_servidor()
