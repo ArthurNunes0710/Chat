@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>Chat Insano</title>
+{%endblock%}
+
+{%block css%}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/chat.css')}}">
+{%endblock%}
+
+{%block body%}
+
+<div class="layout">
+    <div class="conversas"> oi aqui fica as conversas</div>    
+        
+    <div class="chat_bloco">    
+        
+        <div class="area_scroll">
+        {%for msg in mensagens%}
+            {% if session['usuario'] in msg %}
+                <div class="mensagem_eu">{{msg}}</div>
+            {%else%}
+                <div class="mensagem_outro">{{msg}}</div>
+            {%endif%}
+        {%endfor%}
+        </div>
+
+        
+        <form method="post" class="form">
+            <input type="text" name="mensagem">
+            <input type="submit" value="Enviar"> 
+
+        </form>
+        
+    </div>
+</div>
+{%endblock%}

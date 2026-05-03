@@ -1,0 +1,46 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>Chat Insano</title>
+{%endblock%}
+
+{%block css%}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/inicio.css')}}">
+{%endblock%}
+
+{%block body%}
+<div class="layout">
+<div class="borda"></div>
+
+<div class="content">    
+    <video autoplay muted loop playsinline class="video_fundo">
+    <source src="{{ url_for('static', filename='video/cidade_noite.mp4') }}" type="video/mp4">
+    </video>
+    <br><br>
+    <h1 class="nome_app">CHAT INSANO</h1>
+
+    <br> <br><br><br><br><br><br><br><br>
+    <form action="/" method="POST" class="form">
+        <input type="text" name="Login" id="Login">
+        <br>
+        <input type="text" name="Senha" id="Senha">
+        <br>
+        <input type="submit" value="ENTRAR">
+
+
+    </form>
+    <br>
+    <text class="legenda">Ainda não tem uma conta cadastre aqui:</text>
+    <br><br>
+    <a href="/cadastro">
+        <button class="botao_cadastre">CADASTRE-SE</button>
+    </a>
+
+</div>
+
+<div class="borda"> </div>
+
+
+</div>
+
+{%endblock%}

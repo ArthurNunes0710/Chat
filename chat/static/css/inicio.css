@@ -1,0 +1,116 @@
+body, html {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: rgb(255, 255, 255);
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.botao_cadastre {
+  background-color: #09c7cd;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  
+  border-radius: 10px;  
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh; 
+}
+
+.borda {
+    width: 10%; 
+    background-color: #04132d;
+}
+.content {
+    position: relative; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden; 
+}
+.content > * {
+    position: relative;
+    z-index: 1;
+}
+
+table, td, th {
+    border: 1px solid #aaa;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+input[type=submit] {
+  background-color: #09c7cd;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+th {
+    height: 30px;
+}
+
+.nome_app {
+    display: flex;
+    color: aliceblue;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
+}
+
+.video_fundo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.68;
+    object-fit: cover;
+    
+}
+.content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.legenda {
+    color: aliceblue;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
+}
+
+.form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+}
+
+#content {
+    width: 70%;
+}
+

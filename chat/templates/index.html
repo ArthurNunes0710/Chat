@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>Chat Insano</title>
+{%endblock%}
+
+{%block body%}
+
+<div class="content">
+    <h1 style="text-align: center;">Tabela Usuários</h1>
+    <table> 
+        <tr>
+            <th>Login</th>
+            <th>Senha</th>
+            <th>Criado</th>
+            <th>Ações</th>
+
+
+        </tr>
+        {% for i in usuarios %}    
+            <tr>
+                <td>{{i.login}}</td>
+                <td>{{i.senha}}</td>
+                <td>{{i.data_c.date()}}</td>
+                <td>
+                    <a href="/excluir/{{i.login}}">Excluir</a>
+                    <br>
+                    <a href="/editar/{{i.login}}">Editar</a>
+                </td>
+
+                
+            </tr>
+        {% endfor %}    
+    </table>
+
+    <form action="/cadastro" method="POST" class="form">
+        <input type="text" name="Login" id="Login">
+        <br>
+        <input type="text" name="Senha" id="Senha">
+        <br>
+        <input type="submit" value="Adicionar">
+
+
+    </form>
+</div>
+
+{%endblock%}
