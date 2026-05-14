@@ -1,0 +1,51 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>Chat Insano</title>
+{%endblock%}
+
+{%block css%}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/chat.css')}}">
+{%endblock%}
+
+{%block body%}
+
+<div class="layout">
+    <div class="conversas">
+        <form method="post" class="busca_conversas">
+            <input type="text" name="procurar">
+            <input type="submit" value="INICIAR"> 
+
+        </form>
+        {% for c in conversas %}
+
+            <a href="/chat/{{c.id}}" class="nome_convs">
+                {{c.nome}}
+            </a>
+
+        {% endfor %}
+
+    </div>  
+        
+    <div class="chat_bloco">    
+        
+        <div class="area_scroll">
+        {%for msg in mensagens%}
+            {% if msg.proprietario == session['usuario']%}
+                <div class="mensagem_eu">{{msg.proprietario}}: {{msg.texto}}</div>
+            {%else%}
+                <div class="mensagem_outro">{{msg.proprietario}}: {{msg.texto}}</div>
+            {%endif%}
+        {%endfor%}
+        </div>
+
+        
+        <form method="post" class="form">
+            <input type="text" name="mensagem">
+            <input type="submit" value="Enviar"> 
+
+        </form>
+        
+    </div>
+</div>
+{%endblock%}
