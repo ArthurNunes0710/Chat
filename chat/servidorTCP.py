@@ -1,5 +1,6 @@
 import socket
 import threading
+import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from datetime import datetime
@@ -7,7 +8,9 @@ from datetime import datetime
 
 #  app.config liga os dois no mesmo db
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://mensagens_data_user:rWCHTXjZTVi4mFeiJ386ULemRRfDXWIu@dpg-d84e2drbc2fs73c8jueg-a.oregon-postgres.render.com/mensagens_data'
+
 db = SQLAlchemy(app)
 app.secret_key = "abc123"
 

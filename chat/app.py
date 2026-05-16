@@ -2,10 +2,13 @@ from flask import Flask , render_template , url_for , request , redirect , sessi
 from flask_sqlalchemy import SQLAlchemy
 import threading
 import socket
+import psycopg2
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://mensagens_data_user:rWCHTXjZTVi4mFeiJ386ULemRRfDXWIu@dpg-d84e2drbc2fs73c8jueg-a.oregon-postgres.render.com/mensagens_data'
+
 db = SQLAlchemy(app)
 app.secret_key = "abc123"
 
@@ -233,4 +236,7 @@ def editar(login):
         return render_template('editar.html', i = i)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    with app.app_context():
+            db.create_all()
+
+    app.run(host='0.0.0.0', port=8080)
