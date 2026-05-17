@@ -2,6 +2,9 @@
 
 - Implementação de servidores e clientes em python
 
+- Servidor Flask
+- Servidor para distribuição das mensagens
+
 ## Funcionalidades
 
 - Comunicação com múltiplos usuários simultaneamente
