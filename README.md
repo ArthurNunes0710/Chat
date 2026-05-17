@@ -1,5 +1,7 @@
 # Implementação Chat via web
 
+- Implementação de servidores e clientes em python
+
 ## Funcionalidades
 
 - Comunicação com múltiplos usuários simultaneamente
